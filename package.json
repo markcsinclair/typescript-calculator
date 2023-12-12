@@ -2,10 +2,9 @@
   "name": "calculator",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "build": "parcel build ./src/index.html",
-    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html --dist-dir build --no-source-maps",
+    "start": "parcel ./src/index.html --dist-dir dist --no-source-maps",
     "test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
   },
   "nyc": {
@@ -16,7 +15,10 @@
     "exclude": [
       "**/*.d.ts",
       "dist/",
+      "build/",
       "tests/",
+      "coverage",
+      ".eslintrc.js",
       "src/index.ts"
     ],
     "reporter": [
