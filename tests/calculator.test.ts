@@ -1,4 +1,4 @@
-import Calculator from '../src/modules/Calculator';
+import { Calculator } from '../src/modules/Calculator';
 import { expect } from 'chai';
 import 'mocha';
 import sinon, { SinonSpy } from 'sinon';

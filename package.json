@@ -2,10 +2,10 @@
   "name": "calculator",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "build": "parcel build ./src/index.html",
-    "start": "parcel ./src/index.html",
-    "test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
+    "scripts": {
+	"clean": "rimraf ./dist",
+	"start": "parcel --port 1236 ./src/index.html",
+	"test": "nyc mocha -r ts-node/register tests/**/*.test.ts"
   },
   "nyc": {
     "extension": [
@@ -39,6 +39,7 @@
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "parcel": "^2.8.3",
+    "rimraf": "^5.0.5",
     "sinon": "^6.3.5",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"

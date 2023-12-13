@@ -26,7 +26,7 @@ const operations: { [index: string]: Function } = {
   "^": power,
 };
 
-class Calculator {
+export class Calculator {
   currentTotal: number; // What the current running total is
   currentOperator: string; // What the active operator is
   lastOperator: string; // The last operator that was pressed
@@ -220,4 +220,3 @@ class Calculator {
   };
 }
 
-export default Calculator;

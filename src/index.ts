@@ -1,4 +1,4 @@
-import Calculator from './modules/Calculator';
+import { Calculator } from './modules/Calculator';
 
 declare interface ElementEvent extends Event {
   currentTarget: HTMLElement;
