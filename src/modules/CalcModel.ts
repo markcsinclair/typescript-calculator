@@ -15,11 +15,11 @@ export class CalcModel {
 
     constructor() {
         this.history = [];
-        this.ops = new Map<string, Operation>;
+        this.ops = new Map<string, Operation>();
         this.pushOp({name: '+', arity: 2, op: (a: number, b: number): number => a + b});
         this.pushOp({name: '-', arity: 2, op: (a: number, b: number): number => a - b});
         this.pushOp({name: '*', arity: 2, op: (a: number, b: number): number => a * b});
-        this.pushOp({name: '+', arity: 2, op: (a: number, b: number): number => a / b});
+        this.pushOp({name: '/', arity: 2, op: (a: number, b: number): number => a / b});
         this.pushOp({name: '^', arity: 2, op: (a: number, b: number): number => Math.pow(a, b)});
     }
 
