@@ -13,7 +13,7 @@ const subEntry    = {type: 'operator', value: '-'};
 const mulEntry    = {type: 'operator', value: '*'};
 const divEntry    = {type: 'operator', value: '/'};
 const powEntry    = {type: 'operator', value: '^'};
-const sgnEntry    = {type: 'operator', value: '+/-'};
+const sgnEntry    = {type: 'operator', value: '-/+'};
 const invEntry    = {type: 'invalid', value: 'invalid'};
 const unkEntry    = {type: 'operator', value: 'unknown'};
 

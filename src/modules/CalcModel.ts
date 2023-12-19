@@ -22,7 +22,7 @@ export class CalcModel {
         this.pushOp({name: '*', arity: 2, op: (a: number, b: number): number => a * b});
         this.pushOp({name: '/', arity: 2, op: (a: number, b: number): number => b != 0 ? a / b : 0});
         this.pushOp({name: '^', arity: 2, op: (a: number, b: number): number => Math.pow(a, b)});
-        this.pushOp({name: '+/-', arity: 1, op: (a: number): number => -a});
+        this.pushOp({name: '-/+', arity: 1, op: (a: number): number => -a});
     }
 
     pushOp(op: Operation): boolean  {
