@@ -11,6 +11,7 @@ const addEntry   = {type: 'operator', value: '+'};
 const subEntry   = {type: 'operator', value: '-'};
 const mulEntry   = {type: 'operator', value: '*'};
 const divEntry   = {type: 'operator', value: '/'};
+const powEntry   = {type: 'operator', value: '^'};
 
 describe('CalcModel', () => {
     let model: CalcModel;
@@ -93,6 +94,29 @@ describe('CalcModel', () => {
         expect(theResult).to.equal(0);
         expect(model.history).to.deep.equal([zeroEntry, zeroEntry]);
         expect(model.hasError()).be.false;
+    });
+
+    it('Can raise a number to a power', () => {
+        model.pushEntry(twoEntry);
+        model.pushEntry(powEntry);
+        model.pushEntry(twoEntry);
+        expect(model.history).to.deep.equal([zeroEntry, twoEntry, powEntry, twoEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(4);
+        expect(model.history).to.deep.equal([zeroEntry, fourEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Can catch missing operator, arity 2', () => {
+        model.pushEntry(oneEntry);
+        model.pushEntry(oneEntry);
+        expect(model.history).to.deep.equal([zeroEntry, oneEntry, oneEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(0);
+        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.hasError()).be.true;
     });
 
     it('Can return top Entry', () => {
