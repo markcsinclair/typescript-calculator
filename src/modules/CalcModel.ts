@@ -20,7 +20,7 @@ export class CalcModel {
         this.pushOp({name: '+', arity: 2, op: (a: number, b: number): number => a + b});
         this.pushOp({name: '-', arity: 2, op: (a: number, b: number): number => a - b});
         this.pushOp({name: '*', arity: 2, op: (a: number, b: number): number => a * b});
-        this.pushOp({name: '/', arity: 2, op: (a: number, b: number): number => a / b});
+        this.pushOp({name: '/', arity: 2, op: (a: number, b: number): number => b != 0 ? a / b : 0});
         this.pushOp({name: '^', arity: 2, op: (a: number, b: number): number => Math.pow(a, b)});
     }
 
@@ -47,7 +47,7 @@ export class CalcModel {
         if (entry && entry.type == 'number') { // arity = 2
             const right   = parseFloat(entry.value);
             const opEntry = this.history.pop();
-            if (!opEntry || opEntry.type != 'operation') {
+            if (!opEntry || opEntry.type != 'operator') {
                 this.error();
                 return theResult;
             }
@@ -65,7 +65,7 @@ export class CalcModel {
             theResult = op.op(left, right);
             this.pushEntry({type: 'number', value: theResult.toString()});
             return theResult;
-        } else if (entry && entry.type == 'operation') { // arity = 1
+        } else if (entry && entry.type == 'operator') { // arity = 1
             const op = this.ops.get(entry.value);
             if (!op || op.arity != 1) {
                 this.error();
