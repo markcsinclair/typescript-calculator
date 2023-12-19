@@ -2,16 +2,20 @@ import { CalcModel } from '../src/modules/CalcModel';
 import { expect } from 'chai';
 import 'mocha';
 
-const zeroEntry  = {type: 'number', value: '0'};
-const oneEntry   = {type: 'number', value: '1'};
-const twoEntry   = {type: 'number', value: '2'};
-const threeEntry = {type: 'number', value: '3'};
-const fourEntry  = {type: 'number', value: '4'};
-const addEntry   = {type: 'operator', value: '+'};
-const subEntry   = {type: 'operator', value: '-'};
-const mulEntry   = {type: 'operator', value: '*'};
-const divEntry   = {type: 'operator', value: '/'};
-const powEntry   = {type: 'operator', value: '^'};
+const zeroEntry   = {type: 'number', value: '0'};
+const oneEntry    = {type: 'number', value: '1'};
+const twoEntry    = {type: 'number', value: '2'};
+const threeEntry  = {type: 'number', value: '3'};
+const fourEntry   = {type: 'number', value: '4'};
+const negTwoEntry = {type: 'number', value: '-2'};
+const addEntry    = {type: 'operator', value: '+'};
+const subEntry    = {type: 'operator', value: '-'};
+const mulEntry    = {type: 'operator', value: '*'};
+const divEntry    = {type: 'operator', value: '/'};
+const powEntry    = {type: 'operator', value: '^'};
+const sgnEntry    = {type: 'operator', value: '+/-'};
+const invEntry    = {type: 'invalid', value: 'invalid'};
+const unkEntry    = {type: 'operator', value: 'unknown'};
 
 describe('CalcModel', () => {
     let model: CalcModel;
@@ -33,6 +37,26 @@ describe('CalcModel', () => {
     it('Can push number Entry', () => {
         model.pushEntry(oneEntry);
         expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Can push operator Entry', () => {
+        model.pushEntry(oneEntry);
+        model.pushEntry(addEntry);
+        expect(model.history).to.deep.equal([oneEntry, addEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Cannot push Entry with invalid type', () => {
+        model.pushEntry(oneEntry);
+        model.pushEntry(invEntry);
+        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Cannot push operator Entry without prior operand', () => {
+        model.pushEntry(addEntry);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -108,10 +132,62 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
     });
 
-    it('Can catch missing operator, arity 2', () => {
+    it('Can change the sign of a positive number', () => {
+        model.pushEntry(twoEntry);
+        model.pushEntry(sgnEntry);
+        expect(model.history).to.deep.equal([twoEntry, sgnEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(-2);
+        expect(model.history).to.deep.equal([negTwoEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Can change the sign of a negative number', () => {
+        model.pushEntry(negTwoEntry);
+        model.pushEntry(sgnEntry);
+        expect(model.history).to.deep.equal([negTwoEntry, sgnEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(2);
+        expect(model.history).to.deep.equal([twoEntry]);
+        expect(model.hasError()).be.false;
+    });
+
+    it('Sets error when evaluating empty history', () => {
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(0);
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.true;
+    });
+
+    it('Can catch missing operator (empty), arity 2', () => {
+        model.pushEntry(oneEntry);
+        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(0);
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.true;
+    });
+
+    it('Can catch missing operator (number), arity 2', () => {
         model.pushEntry(oneEntry);
         model.pushEntry(oneEntry);
         expect(model.history).to.deep.equal([oneEntry, oneEntry]);
+        expect(model.hasError()).be.false;
+        const theResult = model.evaluate();
+        expect(theResult).to.equal(0);
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.true;
+    });
+
+    it('Can catch missing operand, arity 2', () => {
+        model.pushEntry(oneEntry);
+        model.pushEntry(addEntry);
+        expect(model.history).to.deep.equal([oneEntry, addEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(0);
