@@ -37,6 +37,8 @@ export class CalcModel {
             return;
         } else if (entry.type == 'operator' && !this.ops.get(entry.value)) { // unknown operator
             return;
+        } else if (entry.type == 'operator' && !this.topEntry()) { // no operand
+            return;
         }
         this.history.push(entry);
     }
@@ -91,7 +93,6 @@ export class CalcModel {
 
     clear(): void {
         this.history = [];
-        this.pushEntry({type: 'number', value: '0'});
         this.inError = false;
     }
 

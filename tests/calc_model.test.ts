@@ -22,7 +22,7 @@ describe('CalcModel', () => {
 
     it('Can be instantiated', () => {
         expect(model).is.instanceOf(CalcModel);
-        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
       });
 
@@ -32,7 +32,7 @@ describe('CalcModel', () => {
 
     it('Can push number Entry', () => {
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -40,11 +40,11 @@ describe('CalcModel', () => {
         model.pushEntry(oneEntry);
         model.pushEntry(addEntry);
         model.pushEntry(twoEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry, addEntry, twoEntry]);
+        expect(model.history).to.deep.equal([oneEntry, addEntry, twoEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(3);
-        expect(model.history).to.deep.equal([zeroEntry, threeEntry]);
+        expect(model.history).to.deep.equal([threeEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -52,11 +52,11 @@ describe('CalcModel', () => {
         model.pushEntry(twoEntry);
         model.pushEntry(subEntry);
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, twoEntry, subEntry, oneEntry]);
+        expect(model.history).to.deep.equal([twoEntry, subEntry, oneEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(1);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -64,11 +64,11 @@ describe('CalcModel', () => {
         model.pushEntry(twoEntry);
         model.pushEntry(mulEntry);
         model.pushEntry(twoEntry);
-        expect(model.history).to.deep.equal([zeroEntry, twoEntry, mulEntry, twoEntry]);
+        expect(model.history).to.deep.equal([twoEntry, mulEntry, twoEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(4);
-        expect(model.history).to.deep.equal([zeroEntry, fourEntry]);
+        expect(model.history).to.deep.equal([fourEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -76,11 +76,11 @@ describe('CalcModel', () => {
         model.pushEntry(fourEntry);
         model.pushEntry(divEntry);
         model.pushEntry(twoEntry);
-        expect(model.history).to.deep.equal([zeroEntry, fourEntry, divEntry, twoEntry]);
+        expect(model.history).to.deep.equal([fourEntry, divEntry, twoEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(2);
-        expect(model.history).to.deep.equal([zeroEntry, twoEntry]);
+        expect(model.history).to.deep.equal([twoEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -88,11 +88,11 @@ describe('CalcModel', () => {
         model.pushEntry(oneEntry);
         model.pushEntry(divEntry);
         model.pushEntry(zeroEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry, divEntry, zeroEntry]);
+        expect(model.history).to.deep.equal([oneEntry, divEntry, zeroEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(0);
-        expect(model.history).to.deep.equal([zeroEntry, zeroEntry]);
+        expect(model.history).to.deep.equal([zeroEntry]);
         expect(model.hasError()).be.false;
     });
 
@@ -100,57 +100,54 @@ describe('CalcModel', () => {
         model.pushEntry(twoEntry);
         model.pushEntry(powEntry);
         model.pushEntry(twoEntry);
-        expect(model.history).to.deep.equal([zeroEntry, twoEntry, powEntry, twoEntry]);
+        expect(model.history).to.deep.equal([twoEntry, powEntry, twoEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(4);
-        expect(model.history).to.deep.equal([zeroEntry, fourEntry]);
+        expect(model.history).to.deep.equal([fourEntry]);
         expect(model.hasError()).be.false;
     });
 
     it('Can catch missing operator, arity 2', () => {
         model.pushEntry(oneEntry);
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry, oneEntry]);
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(0);
-        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.true;
     });
 
     it('Can return top Entry', () => {
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
         expect(model.hasError()).be.false;
         expect(model.topEntry()).to.equal(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
+    });
+
+    it('Returns undefined for top Entry when history is empty', () => {
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.false;
+        expect(model.topEntry()).to.undefined;
     });
 
     it('Can clear history', () => {
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
         expect(model.hasError()).be.false;
         model.clear();
-        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
     it('Can set error state', () => {
         model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
+        expect(model.history).to.deep.equal([oneEntry]);
         expect(model.hasError()).be.false;
         model.error();
-        expect(model.history).to.deep.equal([zeroEntry]);
-        expect(model.hasError()).be.true;
-    });
-
-    it('Can report error', () => {
-        model.pushEntry(oneEntry);
-        expect(model.history).to.deep.equal([zeroEntry, oneEntry]);
-        expect(model.hasError()).be.false;
-        model.error();
-        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.true;
     });
 });
