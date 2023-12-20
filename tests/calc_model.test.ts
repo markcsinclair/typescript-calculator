@@ -226,4 +226,10 @@ describe('CalcModel', () => {
         expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.true;
     });
+
+    it('Can provide correct op arities', () => {
+        expect(model.arity('+')).to.equal(2);
+        expect(model.arity('-/+')).to.equal(1);
+        expect(model.arity('unknown')).to.equal(0);
+    });
 });

@@ -1,4 +1,4 @@
-interface Entry {
+export interface Entry {
     type: string; // 'number', 'operator'
     value: string;
 }
@@ -104,5 +104,10 @@ export class CalcModel {
 
     hasError(): boolean {
         return this.inError;
+    }
+
+    arity(opName: string): number {
+        const op = this.ops.get(opName);
+        return !op ? 0 : op.arity;
     }
 }

@@ -107,7 +107,7 @@ html {
   }
 }
 
-[data-value="clear"] {
+[data-value="C"] {
   display: block;
   width: $tileWidth;
   height: $tileWidth;
@@ -121,14 +121,14 @@ html {
   display: flex;
 }
 
-[data-value="evaluate"] {
+[data-value="="] {
   width: 75%;
   height: $tileWidth;
   border-bottom: $border;
   border-left: $border;
 }
 
-[data-value="switchPolarity"] {
+[data-value="-/+"] {
   width: 25%;
   height: $tileWidth;
   border-bottom: $border;
