@@ -9,8 +9,8 @@ declare interface ElementEvent extends Event {
 
 function init() {
   const display: HTMLParagraphElement = document.querySelector('p#display');
-  const calcDisplay = new CalcDisplay();
-  const calcModel   = new CalcModel();
+  const calcDisplay  = new CalcDisplay();
+  const calcModel    = new CalcModel();
   const handleUpdate = (value: string) => {
     display.innerText = value ? value : '0';
   };

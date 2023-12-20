@@ -5,25 +5,23 @@ export class CalcControl {
     calcDisplay: CalcDisplay ;
     calcModel: CalcModel;
     handleUpdate: (value: string) => void;
-    shouldClear: boolean;
+    shouldClearDisplay: boolean;
 
     constructor(display: CalcDisplay, model: CalcModel, update: (value: string) => void) {
-        this.calcDisplay  = display;
-        this.calcModel    = model;
-        this.handleUpdate = update;
-        this.shouldClear  = false;
+        this.calcDisplay         = display;
+        this.calcModel           = model;
+        this.handleUpdate        = update;
+        this.shouldClearDisplay  = false;
     }
 
     buttonPressed(value: string) {
         if (/[\d\.]/.test(value)) { // digit or decimal point
-            console.log("digit:"+value);
-            if (this.shouldClear) {
+            if (this.shouldClearDisplay) {
                 this.calcDisplay.clear();
-                this.shouldClear = false;
+                this.shouldClearDisplay = false;
             }
             this.calcDisplay.appendToDisplay(value);
         } else if (value == '=') {
-            console.log("evaluate:"+value);
             this.calcModel.pushEntry({type: 'number', value: this.calcDisplay.onDisplay});
             const theResult = this.calcModel.evaluate();
             if (this.calcModel.hasError()) {
@@ -31,16 +29,14 @@ export class CalcControl {
             } else {
                 this.calcDisplay.setDisplay(theResult.toString());
             }
-            this.shouldClear = true;
+            this.shouldClearDisplay = true;
         } else if (value == 'C') {
-            console.log("clear:"+value);
             this.calcModel.clear();
             this.calcDisplay.clear();
-            this.shouldClear = false;
+            this.shouldClearDisplay = false;
         } else {
-            console.log("op:"+value);
             this.calcModel.pushEntry({type: 'number', value: this.calcDisplay.onDisplay});
-            this.shouldClear = true;
+            this.shouldClearDisplay = true;
             this.calcModel.pushEntry({type: 'operator', value: value});
             if (this.calcModel.arity(value) == 1) {
                 const theResult = this.calcModel.evaluate();
