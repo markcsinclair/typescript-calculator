@@ -68,7 +68,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(3);
-        expect(model.history).to.deep.equal([threeEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -80,7 +80,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(1);
-        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -92,7 +92,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(4);
-        expect(model.history).to.deep.equal([fourEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -104,7 +104,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(2);
-        expect(model.history).to.deep.equal([twoEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -116,7 +116,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(0);
-        expect(model.history).to.deep.equal([zeroEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -128,7 +128,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(4);
-        expect(model.history).to.deep.equal([fourEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -139,7 +139,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(-2);
-        expect(model.history).to.deep.equal([negTwoEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 
@@ -150,7 +150,7 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
         const theResult = model.evaluate();
         expect(theResult).to.equal(2);
-        expect(model.history).to.deep.equal([twoEntry]);
+        expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
     });
 

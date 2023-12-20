@@ -45,47 +45,42 @@ export class CalcModel {
     }
 
     evaluate(): number {
-        const entry     = this.history.pop();
-        let   theResult = 0;
+        const entry = this.history.pop();
         if (entry && entry.type == 'number') { // arity = 2
             const right   = parseFloat(entry.value);
             const opEntry = this.history.pop();
             if (!opEntry || opEntry.type != 'operator') {
                 this.error();
-                return theResult;
+                return 0;
             }
             const leftEntry = this.history.pop();
             if (!leftEntry || leftEntry.type != 'number') {
                 this.error();
-                return theResult;
+                return 0;
             }
             const left = parseFloat(leftEntry.value);
             const op   = this.ops.get(opEntry.value);
             if (!op || op.arity != 2) {
                 this.error();
-                return theResult;
+                return 0;
             }
-            theResult = op.op(left, right);
-            this.pushEntry({type: 'number', value: theResult.toString()});
-            return theResult;
+            return op.op(left, right);
         } else if (entry && entry.type == 'operator') { // arity = 1
             const op = this.ops.get(entry.value);
             if (!op || op.arity != 1) {
                 this.error();
-                return theResult;
+                return 0;
             }
             const numEntry = this.history.pop();
             if (!numEntry || numEntry.type != 'number') {
                 this.error();
-                return theResult;
+                return 0;
             }
             const num = parseFloat(numEntry.value);
-            theResult = op.op(num);
-            this.pushEntry({type: 'number', value: theResult.toString()});
-            return theResult;
+            return op.op(num);
         }
         this.error();
-        return theResult;
+        return 0;
     }
 
     topEntry(): Entry {
