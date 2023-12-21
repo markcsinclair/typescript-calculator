@@ -232,4 +232,10 @@ describe('CalcModel', () => {
         expect(model.arity('-/+')).to.equal(1);
         expect(model.arity('unknown')).to.equal(0);
     });
+
+    it('Can identify when the history has a binary operator ready for the second number', () => {
+        model.pushEntry(oneEntry);
+        model.pushEntry(addEntry);
+        expect(model.binaryOpReady()).be.true;
+    });
 });

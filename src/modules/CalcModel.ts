@@ -105,4 +105,9 @@ export class CalcModel {
         const op = this.ops.get(opName);
         return !op ? 0 : op.arity;
     }
+
+    binaryOpReady(): boolean {
+        const top = this.topEntry();
+        return (top && top.type == 'operator' && this.arity(top.value) == 2) ? true : false;
+    }
 }
