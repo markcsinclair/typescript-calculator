@@ -13,7 +13,7 @@ export class CalcDisplay {
     }
 
     appendToDisplay(str: string): boolean {
-        const re = /[.0-9]+/;
+        const re = /[\.0-9]+/;
         if (!str || !re.test(str) || this.hasDecimalPoint()) { // empty or invalid str or repeat decimal point
             return false;
         }
