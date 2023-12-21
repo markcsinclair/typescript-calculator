@@ -52,8 +52,8 @@ describe('CalcControl', () => {
         control.shouldClearDisplay = true; 
         control.processAppend('1');
         expect(displayStub.clear.calledOnce).be.true;
-        expect(control.shouldClearDisplay).be.false;
         expect(displayStub.appendToDisplay.withArgs('1').calledOnce).be.true;
+        expect(control.shouldClearDisplay).be.false;
     });
 
     it('Can process evaluate', () => {
@@ -61,15 +61,15 @@ describe('CalcControl', () => {
         modelStub.evaluate.returns(2);
         modelStub.hasError.returns(false);
         control.processEvaluate();
-        expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
         expect(displayStub.setDisplay.withArgs('2').calledOnce).be.true;
+        expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
         expect(control.shouldClearDisplay).be.true;
     });
 
     it('Can process clear', () => {
         control.processClear();
-        expect(modelStub.clear.calledOnce).be.true;
         expect(displayStub.clear.calledOnce).be.true;
+        expect(modelStub.clear.calledOnce).be.true;
         expect(control.shouldClearDisplay).be.false;
     });
 
