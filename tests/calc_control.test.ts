@@ -18,6 +18,10 @@ describe('CalcControl', () => {
         control      = new CalcControl(displayStub, modelStub, handleUpdate);
     });
 
+    it('Can be instantiated', () => {
+        expect(control).is.instanceOf(CalcControl);
+      });
+
     it('Can handle button pressed for number', () => {
         const processAppend = sinon.stub(control, 'processAppend');
         control.buttonPressed('1');
