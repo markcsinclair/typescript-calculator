@@ -63,6 +63,9 @@ export class CalcModel {
             if (!op || op.arity != 2) {
                 this.error();
                 return 0;
+            } else if (op.name == '/' && right == 0) { // divide by zero
+                this.error();
+                return 0;
             }
             return op.op(left, right);
         } else if (entry && entry.type == 'operator') { // arity = 1

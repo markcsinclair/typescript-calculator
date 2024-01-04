@@ -117,7 +117,7 @@ describe('CalcModel', () => {
         const theResult = model.evaluate();
         expect(theResult).to.equal(0);
         expect(model.history).to.deep.equal([]);
-        expect(model.hasError()).be.false;
+        expect(model.hasError()).be.true;
     });
 
     it('Can raise a number to a power', () => {
