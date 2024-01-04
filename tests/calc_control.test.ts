@@ -65,7 +65,6 @@ describe('CalcControl', () => {
     it('Can process evaluate', () => {
         displayStub.onDisplay = '1';
         modelStub.evaluate.returns(2);
-        modelStub.hasError.returns(false);
         const setCalcDisplay = sinon.stub(control, 'setCalcDisplay');
         control.processEvaluate();
         expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
@@ -94,24 +93,24 @@ describe('CalcControl', () => {
         displayStub.onDisplay = '1';
         modelStub.binaryOpReady.returns(false);
         modelStub.arity.returns(1);
-        modelStub.evaluate.returns(2);
-        modelStub.hasError.returns(false);
+        modelStub.evaluate.returns(-1);
+        const setCalcDisplay = sinon.stub(control, 'setCalcDisplay');
         control.processOperation('-/+');
-        expect(displayStub.setDisplay.calledOnceWith('2')).be.true;
         expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
         expect(modelStub.pushEntry.withArgs({type: 'operator', value: '-/+'}).calledOnce).be.true;
+        expect(modelStub.evaluate.calledOnce).be.true;
+        expect(setCalcDisplay.withArgs(-1).calledOnce).be.true;
         expect(control.shouldClearDisplay).be.true;
     });
 
     it('Can process operation (binary ready, arity 2)', () => {
         displayStub.onDisplay = '1';
         modelStub.binaryOpReady.returns(true);
-        modelStub.evaluate.returns(2);
-        modelStub.hasError.returns(false);
         modelStub.arity.returns(2);
+        const processEvaluate = sinon.stub(control, 'processEvaluate');
         control.processOperation('+');
-        expect(displayStub.setDisplay.calledOnceWith('2')).be.true;
-        expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledTwice).be.true;
+        expect(processEvaluate.calledOnce).be.true;
+        expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
         expect(modelStub.pushEntry.withArgs({type: 'operator', value: '+'}).calledOnce).be.true;
         expect(control.shouldClearDisplay).be.true;
     });
