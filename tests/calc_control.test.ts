@@ -24,6 +24,12 @@ describe('CalcControl', () => {
         expect(append.withArgs('1').calledOnce).be.true;
     });
 
+    it('Can handle button pressed for decimal point', () => {
+        const append = sinon.stub(control, 'processAppend');
+        control.buttonPressed('.');
+        expect(append.withArgs('.').calledOnce).be.true;
+    });
+
     it('Can handle button pressed for evaluate', () => {
         const evaluate = sinon.stub(control, 'processEvaluate');
         control.buttonPressed('=');
