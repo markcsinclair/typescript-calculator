@@ -66,9 +66,10 @@ describe('CalcControl', () => {
         displayStub.onDisplay = '1';
         modelStub.evaluate.returns(2);
         modelStub.hasError.returns(false);
+        const setCalcDisplay = sinon.stub(control, 'setCalcDisplay');
         control.processEvaluate();
-        expect(displayStub.setDisplay.withArgs('2').calledOnce).be.true;
         expect(modelStub.pushEntry.withArgs({type: 'number', value: '1'}).calledOnce).be.true;
+        expect(setCalcDisplay.withArgs(2).calledOnce).be.true;
         expect(control.shouldClearDisplay).be.true;
     });
 
