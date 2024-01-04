@@ -19,33 +19,33 @@ describe('CalcControl', () => {
     });
 
     it('Can handle button pressed for number', () => {
-        const append = sinon.stub(control, 'processAppend');
+        const processAppend = sinon.stub(control, 'processAppend');
         control.buttonPressed('1');
-        expect(append.withArgs('1').calledOnce).be.true;
+        expect(processAppend.withArgs('1').calledOnce).be.true;
     });
 
     it('Can handle button pressed for decimal point', () => {
-        const append = sinon.stub(control, 'processAppend');
+        const processAppend = sinon.stub(control, 'processAppend');
         control.buttonPressed('.');
-        expect(append.withArgs('.').calledOnce).be.true;
+        expect(processAppend.withArgs('.').calledOnce).be.true;
     });
 
     it('Can handle button pressed for evaluate', () => {
-        const evaluate = sinon.stub(control, 'processEvaluate');
+        const processEvaluate = sinon.stub(control, 'processEvaluate');
         control.buttonPressed('=');
-        expect(evaluate.calledOnce).be.true;
+        expect(processEvaluate.calledOnce).be.true;
     });
 
     it('Can handle button pressed for clear', () => {
-        const clear = sinon.stub(control, 'processClear');
+        const processClear = sinon.stub(control, 'processClear');
         control.buttonPressed('C');
-        expect(clear.calledOnce).be.true;
+        expect(processClear.calledOnce).be.true;
     });
 
     it('Can handle button pressed for operation', () => {
-        const operation = sinon.stub(control, 'processOperation');
+        const processOperation = sinon.stub(control, 'processOperation');
         control.buttonPressed('+');
-        expect(operation.calledOnce).be.true;
+        expect(processOperation.calledOnce).be.true;
     });
 
     it('Can process append when should-clear is unset', () => {
@@ -127,5 +127,6 @@ describe('CalcControl', () => {
         expect(displayStub.error.calledOnce).be.true;
     });
 });
+
 
 
