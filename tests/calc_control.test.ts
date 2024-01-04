@@ -14,7 +14,7 @@ describe('CalcControl', () => {
     beforeEach(() => {
         displayStub  = sinon.createStubInstance(CalcDisplay);
         modelStub    = sinon.createStubInstance(CalcModel);
-        handleUpdate = (value: string) => value;
+        handleUpdate = (value: string) => {};
         control      = new CalcControl(displayStub, modelStub, handleUpdate);
     });
 
