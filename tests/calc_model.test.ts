@@ -60,6 +60,14 @@ describe('CalcModel', () => {
         expect(model.hasError()).be.false;
     });
 
+    it('Error state resets when a new entry is pushed', () => {
+        model.error();
+        expect(model.hasError()).be.true;
+        model.pushEntry(oneEntry);
+        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+    });
+
     it('Can add two numbers', () => {
         model.pushEntry(oneEntry);
         model.pushEntry(addEntry);
@@ -206,7 +214,21 @@ describe('CalcModel', () => {
     it('Returns undefined for top Entry when history is empty', () => {
         expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.false;
-        expect(model.topEntry()).to.undefined;
+        expect(model.topEntry()).be.undefined;
+    });
+
+    it('Can detect empty history', () => {
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.false;
+        expect(model.topEntry()).be.undefined;
+        expect(model.isHistoryEmpty()).be.true;
+    });
+
+    it('Can detect non empty history', () => {
+        model.pushEntry(oneEntry);
+        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+        expect(model.isHistoryEmpty()).be.false;
     });
 
     it('Can clear history', () => {
@@ -225,6 +247,17 @@ describe('CalcModel', () => {
         model.error();
         expect(model.history).to.deep.equal([]);
         expect(model.hasError()).be.true;
+    });
+
+    it('Can reset error state', () => {
+        model.pushEntry(oneEntry);
+        expect(model.history).to.deep.equal([oneEntry]);
+        expect(model.hasError()).be.false;
+        model.error();
+        expect(model.history).to.deep.equal([]);
+        expect(model.hasError()).be.true;
+        model.resetError();
+        expect(model.hasError()).be.false;
     });
 
     it('Can provide correct op arities', () => {

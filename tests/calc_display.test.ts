@@ -75,6 +75,7 @@ describe('CalcDisplay', () => {
         expect(display.hasError()).be.true;
         const success = display.appendToDisplay('1');
         expect(display.onDisplay).to.equal('1');
+        expect(display.hasError()).be.false;
         expect(success).be.true;
       });
 

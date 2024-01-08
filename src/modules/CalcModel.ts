@@ -38,8 +38,11 @@ export class CalcModel {
             return;
         } else if (entry.type == 'operator' && !this.ops.get(entry.value)) { // unknown operator
             return;
-        } else if (entry.type == 'operator' && !this.topEntry()) { // no operand
+        } else if (entry.type == 'operator' && this.isHistoryEmpty()) { // no operand
             return;
+        }
+        if (this.isHistoryEmpty() && this.hasError()) {
+            this.resetError();
         }
         this.history.push(entry);
     }
@@ -90,9 +93,13 @@ export class CalcModel {
         return this.history[this.history.length-1];
     }
 
+    isHistoryEmpty(): boolean {
+        return !this.topEntry();
+    }
+
     clear(): void {
         this.history = [];
-        this.inError = false;
+        this.resetError();
     }
 
     error(): void {
@@ -102,6 +109,10 @@ export class CalcModel {
 
     hasError(): boolean {
         return this.inError;
+    }
+
+    resetError(): void {
+        this.inError = false;
     }
 
     arity(opName: string): number {
