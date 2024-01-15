@@ -7,8 +7,10 @@ const decodeHTML = (input: string) => {
 
 let button1: Locator;
 let button2: Locator;
+let button3: Locator;
 let plus: Locator;
 let minus: Locator;
+let multiply: Locator;
 let evaluate: Locator;
 let onDisplay: Locator;
 
@@ -17,8 +19,10 @@ test.beforeEach(async ({ page }) => {
 
   button1   = page.locator('.calcButton1');
   button2   = page.locator('.calcButton2');
+  button3   = page.locator('.calcButton3');
   plus      = page.locator('.calcButton12');
   minus     = page.locator('.calcButton13');
+  multiply  = page.locator('.calcButton14');
   evaluate  = page.locator('.calcButton17');
   onDisplay = page.locator('.onDisplay');
 });
@@ -71,4 +75,15 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('2');
     await evaluate.click();
     await expect(onDisplay).toContainText('-1');
+  });
+
+  test('Multiply two numbers', async ({ page }) => {
+    button2.click();
+    await expect(onDisplay).toContainText('2');
+    await multiply.click();
+    await expect(onDisplay).toContainText('2');
+    await button3.click();
+    await expect(onDisplay).toContainText('3');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('6');
   });
