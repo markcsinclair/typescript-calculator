@@ -11,6 +11,7 @@ let button3: Locator;
 let plus: Locator;
 let minus: Locator;
 let multiply: Locator;
+let divide: Locator;
 let evaluate: Locator;
 let onDisplay: Locator;
 
@@ -23,6 +24,7 @@ test.beforeEach(async ({ page }) => {
   plus      = page.locator('.calcButton12');
   minus     = page.locator('.calcButton13');
   multiply  = page.locator('.calcButton14');
+  divide    = page.locator('.calcButton15');
   evaluate  = page.locator('.calcButton17');
   onDisplay = page.locator('.onDisplay');
 });
@@ -45,10 +47,10 @@ test('Has calculator layout', async ({ page }) => {
 
     // Expect operators
     await expect(page.locator('.calcButton11')).toContainText('^');
-    await expect(page.locator('.calcButton12')).toContainText(decodeHTML('&plus;'));
-    await expect(page.locator('.calcButton13')).toContainText(decodeHTML('&minus;'));
-    await expect(page.locator('.calcButton14')).toContainText(decodeHTML('&times;'));
-    await expect(page.locator('.calcButton15')).toContainText(decodeHTML('&divide;'));
+    await expect(plus).toContainText(decodeHTML('&plus;'));
+    await expect(minus).toContainText(decodeHTML('&minus;'));
+    await expect(multiply).toContainText(decodeHTML('&times;'));
+    await expect(divide).toContainText(decodeHTML('&divide;'));
     await expect(page.locator('.calcButton18')).toContainText('-/+');
 
     // onDisplay
@@ -86,4 +88,15 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('3');
     await evaluate.click();
     await expect(onDisplay).toContainText('6');
+  });
+
+  test('Divide two numbers', async ({ page }) => {
+    button3.click();
+    await expect(onDisplay).toContainText('3');
+    await divide.click();
+    await expect(onDisplay).toContainText('3');
+    await button2.click();
+    await expect(onDisplay).toContainText('2');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('1.5');
   });
