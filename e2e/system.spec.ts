@@ -30,6 +30,9 @@ test('Has calculator layout', async ({ page }) => {
     await expect(page.locator('.calcButton14')).toContainText(decodeHTML('&times;'));
     await expect(page.locator('.calcButton15')).toContainText(decodeHTML('&divide;'));
     await expect(page.locator('.calcButton18')).toContainText('-/+');
+
+    // onDisplay
+    await expect(page.locator('.onDisplay')).toContainText('0');
   });
 
   test('Add two numbers', async ({ page }) => {
