@@ -1,5 +1,5 @@
 ## Requirements
-### Funtional requirements
+### Functional requirements
 
 - Add two numbers
 - Subtract two numbers
