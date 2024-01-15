@@ -5,6 +5,7 @@ const decodeHTML = (input: string) => {
     return JSDOM.fragment(input).textContent;
 }
 
+let button0: Locator;
 let button1: Locator;
 let button2: Locator;
 let button3: Locator;
@@ -18,6 +19,7 @@ let onDisplay: Locator;
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:1236/');
 
+  button0   = page.locator('.calcButton0');
   button1   = page.locator('.calcButton1');
   button2   = page.locator('.calcButton2');
   button3   = page.locator('.calcButton3');
@@ -99,4 +101,15 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('2');
     await evaluate.click();
     await expect(onDisplay).toContainText('1.5');
+  });
+
+  test('Handle divide by zero', async ({ page }) => {
+    button1.click();
+    await expect(onDisplay).toContainText('1');
+    await divide.click();
+    await expect(onDisplay).toContainText('1');
+    await button0.click();
+    await expect(onDisplay).toContainText('0');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('error');
   });
