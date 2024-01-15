@@ -1,13 +1,27 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 import { JSDOM } from 'jsdom';
 
 const decodeHTML = (input: string) => {
     return JSDOM.fragment(input).textContent;
 }
 
+let button1: Locator;
+let button2: Locator;
+let plus: Locator;
+let evaluate: Locator;
+let onDisplay: Locator;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto('http://localhost:1236/');
+
+  button1   = page.locator('.calcButton1');
+  button2   = page.locator('.calcButton2');
+  plus      = page.locator('.calcButton12');
+  evaluate  = page.locator('.calcButton17');
+  onDisplay = page.locator('.onDisplay');
+});
+
 test('Has calculator layout', async ({ page }) => {
-    await page.goto('http://localhost:1236/');
-  
     // Expect keyboard
     await expect(page.locator('.calcButton1')).toContainText('1');
     await expect(page.locator('.calcButton2')).toContainText('2');
@@ -36,14 +50,6 @@ test('Has calculator layout', async ({ page }) => {
   });
 
   test('Add two numbers', async ({ page }) => {
-    await page.goto('http://localhost:1236/');
-
-    const button1   = page.locator('.calcButton1');
-    const button2   = page.locator('.calcButton2');
-    const plus      = page.locator('.calcButton12');
-    const evaluate  = page.locator('.calcButton17');
-    const onDisplay = page.locator('.onDisplay');
-
     button1.click();
     await expect(onDisplay).toContainText('1');
     await plus.click();
