@@ -13,6 +13,7 @@ let plus: Locator;
 let minus: Locator;
 let multiply: Locator;
 let divide: Locator;
+let power: Locator;
 let evaluate: Locator;
 let onDisplay: Locator;
 
@@ -27,6 +28,7 @@ test.beforeEach(async ({ page }) => {
   minus     = page.locator('.calcButton13');
   multiply  = page.locator('.calcButton14');
   divide    = page.locator('.calcButton15');
+  power     = page.locator('.calcButton11');
   evaluate  = page.locator('.calcButton17');
   onDisplay = page.locator('.onDisplay');
 });
@@ -48,7 +50,7 @@ test('Has calculator layout', async ({ page }) => {
     await expect(page.locator('.calcButton17')).toContainText('=');
 
     // Expect operators
-    await expect(page.locator('.calcButton11')).toContainText('^');
+    await expect(power).toContainText('^');
     await expect(plus).toContainText(decodeHTML('&plus;'));
     await expect(minus).toContainText(decodeHTML('&minus;'));
     await expect(multiply).toContainText(decodeHTML('&times;'));
@@ -112,4 +114,15 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('0');
     await evaluate.click();
     await expect(onDisplay).toContainText('error');
+  });
+
+  test('Raise one number to the power of another', async ({ page }) => {
+    button2.click();
+    await expect(onDisplay).toContainText('2');
+    await power.click();
+    await expect(onDisplay).toContainText('2');
+    await button3.click();
+    await expect(onDisplay).toContainText('3');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('8');
   });
