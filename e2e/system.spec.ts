@@ -14,6 +14,7 @@ let minus: Locator;
 let multiply: Locator;
 let divide: Locator;
 let power: Locator;
+let sign: Locator;
 let evaluate: Locator;
 let onDisplay: Locator;
 
@@ -29,6 +30,7 @@ test.beforeEach(async ({ page }) => {
   multiply  = page.locator('.calcButton14');
   divide    = page.locator('.calcButton15');
   power     = page.locator('.calcButton11');
+  sign      = page.locator('.calcButton18');
   evaluate  = page.locator('.calcButton17');
   onDisplay = page.locator('.onDisplay');
 });
@@ -55,7 +57,7 @@ test('Has calculator layout', async ({ page }) => {
     await expect(minus).toContainText(decodeHTML('&minus;'));
     await expect(multiply).toContainText(decodeHTML('&times;'));
     await expect(divide).toContainText(decodeHTML('&divide;'));
-    await expect(page.locator('.calcButton18')).toContainText('-/+');
+    await expect(sign).toContainText('-/+');
 
     // onDisplay
     await expect(page.locator('.onDisplay')).toContainText('0');
@@ -125,4 +127,13 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('3');
     await evaluate.click();
     await expect(onDisplay).toContainText('8');
+  });
+
+  test('Change the sign of a number', async ({ page }) => {
+    button1.click();
+    await expect(onDisplay).toContainText('1');
+    await sign.click();
+    await expect(onDisplay).toContainText('-1');
+    await sign.click();
+    await expect(onDisplay).toContainText('1');
   });
