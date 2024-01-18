@@ -16,6 +16,7 @@ let divide: Locator;
 let power: Locator;
 let sign: Locator;
 let evaluate: Locator;
+let clear: Locator;
 let onDisplay: Locator;
 
 test.beforeEach(async ({ page }) => {
@@ -32,6 +33,7 @@ test.beforeEach(async ({ page }) => {
   power     = page.locator('.calcButton11');
   sign      = page.locator('.calcButton18');
   evaluate  = page.locator('.calcButton17');
+  clear     = page.locator('.calcButton16');
   onDisplay = page.locator('.onDisplay');
 });
 
@@ -48,8 +50,8 @@ test('Has calculator layout', async ({ page }) => {
     await expect(page.locator('.calcButton9')).toContainText('9');
     await expect(page.locator('.calcButton0')).toContainText('0');
     await expect(page.locator('.calcButton10')).toContainText('.');
-    await expect(page.locator('.calcButton16')).toContainText('C');
-    await expect(page.locator('.calcButton17')).toContainText('=');
+    await expect(clear).toContainText('C');
+    await expect(evaluate).toContainText('=');
 
     // Expect operators
     await expect(power).toContainText('^');
@@ -136,4 +138,30 @@ test('Has calculator layout', async ({ page }) => {
     await expect(onDisplay).toContainText('-1');
     await sign.click();
     await expect(onDisplay).toContainText('1');
+  });
+
+  test('Clear the calculator', async ({ page }) => {
+    // addition to exercise calculator
+    button1.click();
+    await expect(onDisplay).toContainText('1');
+    await plus.click();
+    await expect(onDisplay).toContainText('1');
+    await button2.click();
+    await expect(onDisplay).toContainText('2');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('3');
+
+    // clear the calculator
+    await clear.click();
+    await expect(onDisplay).toContainText('0');
+
+    // check normal operation (addition) after clear
+    button1.click();
+    await expect(onDisplay).toContainText('1');
+    await plus.click();
+    await expect(onDisplay).toContainText('1');
+    await button2.click();
+    await expect(onDisplay).toContainText('2');
+    await evaluate.click();
+    await expect(onDisplay).toContainText('3');
   });
