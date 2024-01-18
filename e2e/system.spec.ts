@@ -1,8 +1,19 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect, Locator, Page } from '@playwright/test';
 import { JSDOM } from 'jsdom';
 
 const decodeHTML = (input: string) => {
     return JSDOM.fragment(input).textContent;
+}
+
+const checkAddition = async (page: Page) => {
+  button1.click();
+  await expect(onDisplay).toContainText('1');
+  await plus.click();
+  await expect(onDisplay).toContainText('1');
+  await button2.click();
+  await expect(onDisplay).toContainText('2');
+  await evaluate.click();
+  await expect(onDisplay).toContainText('3');
 }
 
 let button0: Locator;
@@ -142,26 +153,12 @@ test('Has calculator layout', async ({ page }) => {
 
   test('Clear the calculator', async ({ page }) => {
     // addition to exercise calculator
-    button1.click();
-    await expect(onDisplay).toContainText('1');
-    await plus.click();
-    await expect(onDisplay).toContainText('1');
-    await button2.click();
-    await expect(onDisplay).toContainText('2');
-    await evaluate.click();
-    await expect(onDisplay).toContainText('3');
+    await checkAddition(page);
 
     // clear the calculator
     await clear.click();
     await expect(onDisplay).toContainText('0');
 
     // check normal operation (addition) after clear
-    button1.click();
-    await expect(onDisplay).toContainText('1');
-    await plus.click();
-    await expect(onDisplay).toContainText('1');
-    await button2.click();
-    await expect(onDisplay).toContainText('2');
-    await evaluate.click();
-    await expect(onDisplay).toContainText('3');
+    await checkAddition(page);
   });
